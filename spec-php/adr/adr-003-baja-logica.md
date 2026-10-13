@@ -1,11 +1,11 @@
-# ADR-003 · Los libros se dan de baja, no se borran
+# ADR-003 · Books are retired, not deleted
 
-- **Estado:** aceptada
-- **Contexto:** una línea de préstamo apunta a un libro. Si el libro se borra físicamente, el historial y el reporte quedan rotos.
-- **Decisión:** el libro lleva `deleted_at`. Dar de baja lo llena; el catálogo filtra por `deleted_at IS NULL` en un único lugar
-  (filtro global). Un libro con préstamos abiertos **no** se da de baja (409 `BOOK_HAS_OPEN_LOANS`). La unicidad del ISBN es un
-  índice **parcial** sobre libros activos, así un ISBN dado de baja puede volver a registrarse.
-- **Alternativas descartadas:** borrado físico con cascada (destruye el histórico); marcar `active = false` (no dice cuándo).
-- **Consecuencias:** `loan_item.book_id` lleva una FK `RESTRICT` como **barrera de última instancia**: un `DELETE` manual o un cambio de
-  código futuro fallan ruidosamente en vez de corromper el histórico. El binario de la portada es el único dato que sí se borra físicamente.
-- **Cómo se verifica:** consultar un libro dado de baja devuelve 404; un `DELETE` por `psql` sobre un libro con líneas falla por la FK.
+- **Status:** accepted
+- **Context:** a loan line points to a book. If the book is physically deleted, history and the report break.
+- **Decision:** the book carries `deleted_at`. Retiring fills it; the catalog filters by `deleted_at IS NULL` in a single place
+  (global filter). A book with open loans is **not** retired (409 `BOOK_HAS_OPEN_LOANS`). ISBN uniqueness is a
+  **partial** index over active books, so a retired ISBN can be registered again.
+- **Discarded alternatives:** physical deletion with cascade (destroys history); `active = false` flag (does not say when).
+- **Consequences:** `loan_item.book_id` carries a `RESTRICT` FK as a **last-resort barrier**: a manual `DELETE` or a future
+  code change fails loudly instead of corrupting history. The cover binary is the only data that is physically deleted.
+- **Verification:** querying a retired book returns 404; a `DELETE` via `psql` on a book with lines fails on the FK.
