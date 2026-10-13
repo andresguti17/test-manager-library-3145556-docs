@@ -7,7 +7,7 @@ How what [`spec.md`](spec.md) and [`constitution.md`](constitution.md) say is bu
 
 | # | Decision | Choice (PHP) | Why |
 |---|---|---|---|
-| D-01 | Language and runtime | PHP 8.3 + Laravel 11 | Challenge stack |
+| D-01 | Language and runtime | PHP 8.4 + Laravel 12 | Challenge stack |
 | D-02 | HTTP framework | Laravel (API routes + Form Requests + Resources) | Contract in [`api-contract.md`](api-contract.md) |
 | D-03 | Persistence | Eloquent + Laravel migrations over PostgreSQL 16 | The schema belongs to the migrations (ADR-001) |
 | D-04 | Concurrency | Version witness per book + range `CHECK` ([ADR-002](adr/adr-002-concurrencia-optimista.md)) | Last copy (RNF-2) |
