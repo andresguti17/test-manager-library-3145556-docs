@@ -52,10 +52,13 @@ Omit it only for cross-cutting changes (`docs: adjust commit convention`).
 ## Branches
 
 ```text
-main                      # always deliverable
-task/T-09-loan            # one task, short-lived, deleted after merge
-fix/CA-03.2-active-isbn   # single fix
+main                      # always deliverable; what counts for delivery
+develop                   # integration; task branches merge here
+task/T-09-loan            # one task, short-lived, merges into develop, deleted after
+fix/CA-03.2-active-isbn   # single fix, merges into develop
 ```
+
+Flow: `task/*` → `develop` (integrate + verify evidence) → `main` (only when stable and deliverable). `main` moves with fast-forward merges from `develop`.
 
 ## Examples
 
